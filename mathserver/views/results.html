@@ -1,0 +1,47 @@
+<!-- file: ./views/hello.html -->
+<html>
+<head>
+    <title>Math Results</title>
+    <style>
+        #results {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #results td, #results th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #results tr:nth-child(even){background-color: #f2f2f2;}
+
+        #results tr:hover {background-color: #ddd;}
+
+        #results th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <table id="results" style="width:50%">
+        <tr><th colspan="2">Results</th></tr>
+        <tr>
+            <td>Function</td>
+            <td>{{.function}}</td>
+        </tr>
+        <tr>
+            <td>Paramaters</td>
+            <td>{{.params}}</td>
+        </tr>
+        <tr>
+            <td>Results</td>
+            <td>{{.results}}</td>
+        </tr>
+    </table>
+</body>
+</html>

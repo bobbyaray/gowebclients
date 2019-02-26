@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gojektech/heimdall/httpclient"
 	gorilla "github.com/gorilla/http"
 	"github.com/levigross/grequests"
 	"github.com/parnurzeal/gorequest"
@@ -32,7 +33,7 @@ func RunClientTest(totalcount int, concurrent int, url string) {
 func CallRoutine(count int, url string, callchan chan int) {
 	errors := 0
 	for x := 0; x < count; x++ {
-		if !SendGRequestsCall(url) {
+		if !SendCall(url) {
 			errors++
 		}
 	}
@@ -95,5 +96,21 @@ func SendGRequestsCall(url string) bool {
 		return false
 	}
 	resp.String()
+	return true
+}
+
+func SendHeimdallRequestsCall(url string) bool {
+	// Create a new HTTP client with a default timeout
+	timeout := 1000 * time.Millisecond
+	client := httpclient.NewClient(httpclient.WithHTTPTimeout(timeout))
+
+	// Use the clients GET method to create and execute the request
+	res, err := client.Get(url, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	// Heimdall returns the standard *http.Response object
+	ioutil.ReadAll(res.Body)
 	return true
 }
